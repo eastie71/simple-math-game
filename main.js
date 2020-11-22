@@ -19,7 +19,7 @@ const createProblem = () => {
     }
   }
   currentProblem.innerHTML = `${firstNumber} ${currentOperator} ${secondNumber}`
-  status.innerHTML = `You have answered ${correctCount} out of 10 questions correctly. You are allowed ${incorrectRemaining} more incorrect answers.`
+  status.innerHTML = `You have answered <span class="correct">${correctCount}</span> out of 10 questions correctly. You are allowed <span class="incorrect">${incorrectRemaining}</span> more incorrect answers.`
 }
 
 const resetAnswer = () => {
@@ -48,10 +48,8 @@ const submitAnswer = (e) => {
     correctAnswer = firstNumber * secondNumber
   
   if (correctAnswer === parseInt(answer.value)) {
-    alert("Correct answer!")
     correctCount++
   } else {
-    alert("Wrong answer")
     incorrectRemaining--
   }
   if (correctCount == 10) {
