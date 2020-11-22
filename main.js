@@ -3,6 +3,9 @@ let secondNumber
 let currentOperator
 let currentProblem = document.querySelector(".current-problem");
 let answer = document.querySelector(".answer")
+let status = document.querySelector(".status")
+let correctCount = 0
+let incorrectRemaining = 3
 let operators
 
 const createProblem = () => {
@@ -16,11 +19,17 @@ const createProblem = () => {
     }
   }
   currentProblem.innerHTML = `${firstNumber} ${currentOperator} ${secondNumber}`
+  status.innerHTML = `You have answered ${correctCount} out of 10 questions correctly. You are allowed ${incorrectRemaining} more incorrect answers.`
 }
 
 const resetAnswer = () => {
   answer.value = ""
   answer.focus()
+}
+
+const resetCounts = () => {
+  correctCount = 0;
+  incorrectRemaining = 3;
 }
 
 const submitAnswer = (e) => {
@@ -31,14 +40,28 @@ const submitAnswer = (e) => {
     return
   }
   let correctAnswer
-  if (currentOperator == "-") correctAnswer = firstNumber - secondNumber
-  else if (currentOperator == "+") correctAnswer = firstNumber + secondNumber
-  else if (currentOperator == "x") correctAnswer = firstNumber * secondNumber
+  if (currentOperator == "-") 
+    correctAnswer = firstNumber - secondNumber
+  else if (currentOperator == "+") 
+    correctAnswer = firstNumber + secondNumber
+  else if (currentOperator == "x") 
+    correctAnswer = firstNumber * secondNumber
   
-  if (correctAnswer === parseInt(answer.value))
+  if (correctAnswer === parseInt(answer.value)) {
     alert("Correct answer!")
-  else
+    correctCount++
+  } else {
     alert("Wrong answer")
+    incorrectRemaining--
+  }
+  if (correctCount == 10) {
+    resetCounts();
+    alert("Congratulations you won! Well done!")
+  } else if (incorrectRemaining == 0) {
+    resetCounts()
+    alert("Sorry you lost. Better luck next time!")
+  }
+  createProblem()
   resetAnswer()
 }
 
